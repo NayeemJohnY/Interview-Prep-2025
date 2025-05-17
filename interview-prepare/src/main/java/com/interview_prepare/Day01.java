@@ -19,12 +19,6 @@ import static org.hamcrest.Matchers.*;
 
 public class Day01 {
 
-    /*
-     * Scenario: You are given a list of customer IDs from a CSV file.
-     * Some IDs are duplicated.
-     * How would you ensure unique records while processing the file in Java?
-     */
-
     public void uniqueAndDuplicateCustomerIds() {
         List<Integer> customerIds = Arrays.asList(1123, 1101, 1456, 1101, 2000, 1987, 1456);
         HashSet<Integer> uniqueCustomerIds = new HashSet<>();
