@@ -1,0 +1,19 @@
+{
+  "name": "dummy-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dummy-api": "file:",
+    "express": "^5.1.0",
+    "express-jwt": "^8.5.1",
+    "express-oauth2-jwt-bearer": "^1.6.1",
+    "jwks-rsa": "^3.2.0"
+  }
+}
