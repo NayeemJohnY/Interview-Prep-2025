@@ -1,8 +1,8 @@
 package com.interview_prepare;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.Matchers.containsString;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -298,16 +298,17 @@ public class Day03 {
         }
         driver.quit();
     }
+
     /*
      * 5️⃣ Validate Response Body with Multiple Fields in Rest Assured
      * 📌 Question: How do you validate multiple fields in a JSON response?
      *
      */
     @Test
-    public void testValidateMultipleResponseBodyFields(){
+    public void testValidateMultipleResponseBodyFields() {
         RestAssured.given().get("https://jsonplaceholder.typicode.com/users/1").then()
-        .body("id", equalTo(1))
-        .body("email", containsString("@april.biz"))
-        .body("company", hasEntry("name", "Romaguera-Crona"));
+                .body("id", equalTo(1))
+                .body("email", containsString("@april.biz"))
+                .body("company", hasEntry("name", "Romaguera-Crona"));
     }
 }

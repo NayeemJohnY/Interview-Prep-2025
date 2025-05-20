@@ -73,12 +73,12 @@ public class Day01 {
          * field exists and has a specific value.
          */
         RestAssured.baseURI = "https://reqres.in";
-       RestAssured.given()
-        .when().header("x-api-key", "reqres-free-v1")
-        .log().all()
-        .get("/api/users/2")
-        .then().statusCode(200)
-        .body("data.email", endsWith("@reqres.in"));
+        RestAssured.given()
+                .when().header("x-api-key", "reqres-free-v1")
+                .log().all()
+                .get("/api/users/2")
+                .then().statusCode(200)
+                .body("data.email", endsWith("@reqres.in"));
 
     }
 }

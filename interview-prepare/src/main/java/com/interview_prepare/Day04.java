@@ -1,10 +1,8 @@
 package com.interview_prepare;
 
 import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasKey;
 
 import java.io.File;
@@ -256,12 +254,13 @@ public class Day04 {
         Response response = retryRequest(request, shouldRetry, 3, 5000);
         response.then().statusCode(200);
     }
+
     /*
      * 2️⃣ Capture Screenshot on Selenium Test Failure
      * 📌 Question: How do you take a screenshot when a Selenium test fails?
      */
     @Test
-    public void testTakeScreenshotOnTestFailure() throws IOException{
+    public void testTakeScreenshotOnTestFailure() throws IOException {
         WebDriver driver = new ChromeDriver();
         driver.get("https://login.microsoftonline.com");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
@@ -279,20 +278,21 @@ public class Day04 {
         }
         driver.quit();
     }
+
     /*
      * 3️⃣ Extract Nested JSON Data in Rest Assured
      * 📌 Question: How do you extract nested JSON values from an API response?
      * ➡ Example Response:
      */
     @Test
-    public void testNestedJSONData(){
+    public void testNestedJSONData() {
         Response response = RestAssured.given()
-        .get("https://dummyjson.com/posts");
+                .get("https://dummyjson.com/posts");
         Assert.assertEquals(response.jsonPath().getString("posts[0].userId"), "121");
 
         RestAssured.given()
-        .get("https://dummyjson.com/posts").then().body("posts[0].tags",  hasItem("history"))
-        .body("posts[1].reactions", hasKey("likes"));
+                .get("https://dummyjson.com/posts").then().body("posts[0].tags", hasItem("history"))
+                .body("posts[1].reactions", hasKey("likes"));
     }
 
     /*
@@ -301,11 +301,11 @@ public class Day04 {
      * Selenium?
      */
     @Test
-    public void testHandleIframes(){
+    public void testHandleIframes() {
         WebDriver driver = new ChromeDriver();
         driver.get("https://letcode.in/frame");
         new WebDriverWait(driver, Duration.ofSeconds(30)).until(
-            ExpectedConditions.frameToBeAvailableAndSwitchToIt("firstFr"));
+                ExpectedConditions.frameToBeAvailableAndSwitchToIt("firstFr"));
         By emailInput = By.name("email");
         try {
             driver.findElement(emailInput).sendKeys("test@test.com");
@@ -338,14 +338,14 @@ public class Day04 {
      * 📌 Question: How do you validate an array of JSON responses in Rest Assured?
      */
     @Test
-    public void validateJSONArrayRestAssurred(){
+    public void validateJSONArrayRestAssurred() {
         RestAssured.get("https://dummyjson.com/comments")
-        .then().body("comments.size()", equalTo(30));
+                .then().body("comments.size()", equalTo(30));
 
         RestAssured.get("https://dummyjson.com/posts")
-        .then().body("posts.tags.flatten()", anyOf(
-            hasItem("history"), hasItem("french"), hasItem("magical"), hasItem("love"),
-             hasItem("mistery"), hasItem("american"), hasItem("crime"), hasItem("fiction"),
-             hasItem("classic"), hasItem("english")));
+                .then().body("posts.tags.flatten()", anyOf(
+                        hasItem("history"), hasItem("french"), hasItem("magical"), hasItem("love"),
+                        hasItem("mistery"), hasItem("american"), hasItem("crime"), hasItem("fiction"),
+                        hasItem("classic"), hasItem("english")));
     }
 }
