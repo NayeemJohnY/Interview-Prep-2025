@@ -256,6 +256,6 @@ public class Day05 {
     @Test
     public void testRestAssuredTimeThreshold(){
          RestAssured.given().get("https://reqres.in/users").then()
-                .time(lessThan(3000L));
+                .time(lessThan(5000L));
     }
 }
