@@ -6,7 +6,6 @@
     <groupId>com.interview_prepare</groupId>
     <artifactId>interview-prepare</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
@@ -33,10 +32,10 @@
             <artifactId>testng</artifactId>
             <version>7.11.0</version>
         </dependency>
-      <dependency>
+        <dependency>
         <groupId>org.apache.poi</groupId>
         <artifactId>poi-ooxml</artifactId>
-        <version>4.1.0</version>
+        <version>5.4.0</version>
       </dependency>
     </dependencies>
 </project>

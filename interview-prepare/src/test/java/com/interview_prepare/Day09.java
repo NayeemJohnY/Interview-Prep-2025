@@ -9,13 +9,9 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -277,7 +273,7 @@ public class Day09 {
                 Assert.assertEquals(loopExcelData, iteratorExcelData);
                 List<List<String>> intStreamExcelData = getExcelDataUsingIntStream(sheet);
                 Assert.assertEquals(loopExcelData, intStreamExcelData);
-                return intStreamExcelData.stream().map(list ->list.toArray(new Object[0])).toArray(Object[][]::new);
+                return intStreamExcelData.stream().map(list -> list.toArray(new Object[0])).toArray(Object[][]::new);
             }
         } catch (IOException e) {
             e.printStackTrace();
