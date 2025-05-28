@@ -33,6 +33,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -217,90 +218,71 @@ public class Day09 {
      * 📌 Question: How do you read data from an Excel file using Selenium with
      * Apache POI?
      */
-    @Test
-    public void testDataFromExcel() {
-        excelDataProvider();
+    @Test(dataProvider = "excelDataProvider")
+    public void testDataFromExcel(String usernmae, String password, String age) {
+        System.out.println(usernmae + " " + password + " " + age);
     }
 
-    Map<CellType, Function<Cell, String>> cellValueExtractors = Map.of(
-            CellType.STRING, Cell::getStringCellValue,
-            CellType.NUMERIC, cell -> {
-                if (DateUtil.isCellDateFormatted(cell)) {
-                    return cell.getDateCellValue().toString(); // Handle date cells
-                } else {
-                    return String.valueOf(cell.getNumericCellValue()); // Handle numeric cells
-                }
-            },
-            CellType.BOOLEAN, cell -> String.valueOf(cell.getBooleanCellValue()), // Handle boolean cells
-            CellType.FORMULA, Cell::getCellFormula // Handle formula cells
-    );
+    public String getCellValue(Cell cell) {
+        if (cell.getCellType() == CellType.FORMULA)
+            return cell.getCellFormula();
+        if (cell.getCellType() == CellType.BOOLEAN)
+            return String.valueOf(cell.getBooleanCellValue());
+        if (cell.getCellType() == CellType.NUMERIC) {
+            if (DateUtil.isCellDateFormatted(cell))
+                return cell.getDateCellValue().toString();
+            else
+                return String.valueOf(cell.getNumericCellValue());
+        }
+        return cell.getStringCellValue();
+    }
 
-    public void excelDataProvider() {
-        try (FileInputStream fileInputStream = new FileInputStream("./src/main/resources/userdata.xlsx")) {
-            Workbook workbook = new XSSFWorkbook(fileInputStream);
-            Sheet sheet = workbook.getSheetAt(0);
-            // Way 1
-            List<List<String>> excelData1 = Stream
-                    .iterate(1, i -> i < sheet.getPhysicalNumberOfRows(), i -> i + 1)
-                    .map(sheet::getRow).map(
-                            row -> Stream.iterate(0, j -> j < row.getLastCellNum(), j -> j + 1)
-                                    .map(row::getCell)
-                                    .map(cell -> cellValueExtractors.getOrDefault(cell.getCellType(), c -> "")
-                                            .apply(cell))
-                                    .toList())
-                    .toList();
-            System.out.println(excelData1);
-            // Way 2
-            List<List<String>> excelData2 = IntStream
-                    .range(1, sheet.getPhysicalNumberOfRows())
-                    .mapToObj(sheet::getRow).map(row -> IntStream.range(0, row.getLastCellNum())
-                            .mapToObj(row::getCell)
-                            .map(cell -> cellValueExtractors.getOrDefault(cell.getCellType(), c -> "").apply(cell))
-                            .toList())
-                    .toList();
-            System.out.println(excelData2);
+    public List<List<String>> getExcelDataUsingIterator(Sheet sheet) {
+        return Stream.iterate(1, i -> i < sheet.getPhysicalNumberOfRows(), i -> i + 1)
+                .map(sheet::getRow)
+                .map(row -> Stream.iterate(0, j -> j < row.getLastCellNum(), j -> j + 1)
+                        .map(row::getCell).map(this::getCellValue).toList())
+                .toList();
+    }
 
-            // Way 3
-            List<List<String>> excelData3 = new ArrayList<>();
-            for (int k = 1; k < sheet.getPhysicalNumberOfRows(); k++) {
-                Row row = sheet.getRow(k);
-                List<String> rowData = new ArrayList<>();
-                for (int index = 0; index < row.getLastCellNum(); index++) {
-                    Cell cell = row.getCell(index);
-                    rowData.add(cellValueExtractors.get(cell.getCellType()).apply(cell));
-                }
-                excelData3.add(rowData);
+    public List<List<String>> getExcelDataUsingIntStream(Sheet sheet) {
+        return IntStream.range(1, sheet.getPhysicalNumberOfRows())
+                .mapToObj(sheet::getRow)
+                .map(row -> IntStream.range(0, row.getLastCellNum())
+                        .mapToObj(row::getCell).map(this::getCellValue).toList())
+                .toList();
+    }
 
+    public List<List<String>> getExcelDataUsingForLoop(Sheet sheet) {
+        List<List<String>> excelData = new ArrayList<>();
+        for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+            Row row = sheet.getRow(i);
+            List<String> rowData = new ArrayList<>();
+            for (int j = 0; j < row.getLastCellNum(); j++) {
+                Cell cell = row.getCell(j);
+                rowData.add(getCellValue(cell));
             }
-            System.out.println(excelData3);
+            excelData.add(rowData);
+        }
+        return excelData;
+    }
 
-            // Way 4
-            Row headerRow = sheet.getRow(0);
-
-            List<Map<String, String>> excelData4 = IntStream.range(1, sheet.getPhysicalNumberOfRows()) // Start from row
-                                                                                                       // 1, skip header
-                    .mapToObj(sheet::getRow) // Get each row
-                    .map(row -> {
-                        Map<String, String> rowData = new HashMap<>();
-                        IntStream.range(0, row.getLastCellNum()) // Iterate through cells in the row
-                                .forEach(cellIndex -> {
-                                    Cell cell = row.getCell(cellIndex);
-                                    String columnName = headerRow.getCell(cellIndex).getStringCellValue(); // Get the
-                                                                                                           // column
-                                                                                                           // name from
-                                                                                                           // the header
-                                    Function<Cell, String> extractor = cellValueExtractors
-                                            .getOrDefault(cell.getCellType(), c -> "");
-                                    rowData.put(columnName, extractor.apply(cell)); // Map column name to cell value
-                                });
-                        return rowData;
-                    })
-                    .collect(Collectors.toList()); // Collect all row maps into a list
-
-            System.out.println(excelData4);
+    @DataProvider(name = "excelDataProvider")
+    public Object[][] excelDataProvider() {
+        try (FileInputStream fileInputStream = new FileInputStream("./src/main/resources/userdata.xlsx")) {
+            try (Workbook workbook = new XSSFWorkbook(fileInputStream)) {
+                Sheet sheet = workbook.getSheetAt(0);
+                List<List<String>> loopExcelData = getExcelDataUsingForLoop(sheet);
+                List<List<String>> iteratorExcelData = getExcelDataUsingIterator(sheet);
+                Assert.assertEquals(loopExcelData, iteratorExcelData);
+                List<List<String>> intStreamExcelData = getExcelDataUsingIntStream(sheet);
+                Assert.assertEquals(loopExcelData, intStreamExcelData);
+                return intStreamExcelData.stream().map(list ->list.toArray(new Object[0])).toArray(Object[][]::new);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return new Object[0][0];
     }
 
     /*
