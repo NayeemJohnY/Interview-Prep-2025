@@ -219,7 +219,7 @@ public class Day09 {
         System.out.println(usernmae + " " + password + " " + age);
     }
 
-    public String getCellValue(Cell cell) {
+    public static String getCellValue(Cell cell) {
         if (cell.getCellType() == CellType.FORMULA)
             return cell.getCellFormula();
         if (cell.getCellType() == CellType.BOOLEAN)
@@ -237,7 +237,7 @@ public class Day09 {
         return Stream.iterate(1, i -> i < sheet.getPhysicalNumberOfRows(), i -> i + 1)
                 .map(sheet::getRow)
                 .map(row -> Stream.iterate(0, j -> j < row.getLastCellNum(), j -> j + 1)
-                        .map(row::getCell).map(this::getCellValue).toList())
+                        .map(row::getCell).map(Day09::getCellValue).toList())
                 .toList();
     }
 
@@ -245,7 +245,7 @@ public class Day09 {
         return IntStream.range(1, sheet.getPhysicalNumberOfRows())
                 .mapToObj(sheet::getRow)
                 .map(row -> IntStream.range(0, row.getLastCellNum())
-                        .mapToObj(row::getCell).map(this::getCellValue).toList())
+                        .mapToObj(row::getCell).map(Day09::getCellValue).toList())
                 .toList();
     }
 
