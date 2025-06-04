@@ -88,3 +88,12 @@ app.get("/test429", (req, res) => {
   }, interval)
 
 });
+
+let retry = 0;
+app.get("/test500", (req, res) => {
+  if (retry >= 2) {
+    return res.status(200).json({ message: "Success After Retry" })
+  }
+  res.status(500 + retry).json();
+  retry++;
+});
