@@ -309,6 +309,7 @@ public class Day15 {
      * 5️⃣ How to Handle Element Click Intercepted Exception in Selenium?
      * 📌 Question: How do you resolve ElementClickInterceptedException in Selenium?
      * ✅ Solution:
+     * 0) Explicit Waits: Use WebDriverWait to wait for elements to become clickable.
      * 1) Using scrollIntoView to element
      * 2) Closing any overlays before click
      * 3) Using force click - js click()
