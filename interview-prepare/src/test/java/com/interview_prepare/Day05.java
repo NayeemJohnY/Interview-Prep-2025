@@ -147,21 +147,6 @@ public class Day05 {
      * 🔹 Input: {[John, 5000], [Doe, 7000], [Anna, 6000]}
      * 🔹 Output: {[John, 5000], [Anna, 6000], [Doe, 7000]}
      */
-    class Employee {
-        String name;
-        int salary;
-
-        public Employee(String name, int salary) {
-            this.name = name;
-            this.salary = salary;
-        }
-
-        @Override
-        public String toString() {
-            return "[ " + name + ", " + salary + "]";
-        }
-    }
-
     @Test
     public void sortEmployeesBySalray() {
         List<Employee> employees = Arrays.asList(
@@ -248,14 +233,15 @@ public class Day05 {
         driver.quit();
 
     }
+
     /*
      * 5️⃣ Validate Response Time in Rest Assured
      * 📌 Question: How do you verify that an API responds within a specific time
      * threshold?
      */
     @Test
-    public void testRestAssuredTimeThreshold(){
-         RestAssured.given().get("https://reqres.in/users").then()
+    public void testRestAssuredTimeThreshold() {
+        RestAssured.given().get("https://reqres.in/users").then()
                 .time(lessThan(5000L));
     }
 }
