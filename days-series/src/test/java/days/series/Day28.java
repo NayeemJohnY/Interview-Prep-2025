@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -80,7 +81,7 @@ public class Day28 {
         List<String> list = List.of("alice", "bob", "adam", "bruce", "carol");
         System.out.println(list.stream().collect(Collectors.groupingBy(str -> str.charAt(0))));
         System.out.println(list.stream().collect(Collectors.groupingBy(
-                str -> Character.toUpperCase(str.charAt(0)), TreeMap::new, Collectors.toList())));
+                str -> Character.toUpperCase(str.charAt(0)), (Supplier<TreeMap<Character, List<String>>>)TreeMap::new, Collectors.toList())));
     }
 
     /*

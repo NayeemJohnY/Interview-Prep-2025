@@ -1,0 +1,42 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="MyTestSuite">
+  <test name="MyTest"  parallel="true" thread-count="5">
+    <groups>
+      <run>
+        <include name="smoke"></include>
+      </run>
+    </groups>
+    <classes>
+      <class name="days.series.Day03"/>
+      <class name="days.series.Day04"/>
+      <class name="days.series.Day05"/>
+      <class name="days.series.Day06"/>
+      <class name="days.series.Day07"/>
+      <class name="days.series.Day08"/>
+      <class name="days.series.Day09"/>
+      <class name="days.series.Day10"/>
+      <class name="days.series.Day11"/>
+      <class name="days.series.Day12"/>
+      <class name="days.series.Day13"/>
+      <class name="days.series.Day14"/>
+      <class name="days.series.Day15"/>
+      <class name="days.series.Day16"/>
+      <class name="days.series.Day17"/>
+      <class name="days.series.Day18"/>
+      <class name="days.series.Day19"/>
+      <class name="days.series.Day20"/>
+      <class name="days.series.Day21"/>
+      <class name="days.series.Day22"/>
+      <class name="days.series.Day23"/>
+      <class name="days.series.Day24"/>
+      <class name="days.series.Day25"/>
+      <class name="days.series.Day26"/>
+      <class name="days.series.Day27"/>
+      <class name="days.series.Day28"/>
+      <class name="days.series.Day29"/>
+      <class name="days.series.Day30"/>
+      <class name="days.series.Day31"/>
+      <class name="days.series.Day32"/>
+    </classes>
+  </test>
+</suite>
