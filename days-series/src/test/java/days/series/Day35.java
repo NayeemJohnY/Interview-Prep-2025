@@ -101,7 +101,7 @@ public class Day35 {
             hashMap.put(i, hashMap.getOrDefault(i, 0) + 1);
         }
         hashMap.entrySet().stream()
-                .filter(entry -> entry.getValue() >= arr.length / 2).map(Map.Entry::getKey).findAny()
+                .filter(entry -> entry.getValue() > arr.length / 2).map(Map.Entry::getKey).findAny()
                 .ifPresentOrElse(System.out::println, () -> System.out.println("No Majority Element"));
 
     }
