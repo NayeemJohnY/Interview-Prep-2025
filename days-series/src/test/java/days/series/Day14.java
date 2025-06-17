@@ -1,26 +1,20 @@
 package days.series;
 
-import static org.hamcrest.Matchers.array;
-
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import org.apache.commons.lang3.Validate;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
@@ -228,16 +222,16 @@ public class Day14 {
      * class?
      */
     @Test
-    public void handleDropDownWithoutSelectClass(){
+    public void handleDropDownWithoutSelectClass() {
         WebDriver driver = new ChromeDriver(new ChromeOptions().addArguments("--start-maximized"));
         driver.get("https://www.jquery-az.com/bootstrap4/demo.php?ex=79.0_1");
-        driver.findElement(By.id("btnDropdownDemo")).click();;
+        driver.findElement(By.id("btnDropdownDemo")).click();
+        ;
         driver.findElement(By.xpath(("//*[text()='Bootstrap 4']"))).click();
         Assert.assertTrue(driver.getCurrentUrl().contains("bootstrap-4"));
         driver.quit();
 
     }
-
 
     /*
      * 5️⃣ How to Handle 500 Internal Server Error in API Testing?
@@ -273,9 +267,9 @@ public class Day14 {
     }
 
     @Test
-    public void handle500APIErrors(){
-        Response finalResponse = retryRequest(() -> RestAssured.get("http://localhost:3000/test500"), 
-        ((Predicate<Response>) res -> res.getStatusCode()>=500), 3, 2000);
+    public void handle500APIErrors() {
+        Response finalResponse = retryRequest(() -> RestAssured.get("http://localhost:3000/test500"),
+                ((Predicate<Response>) res -> res.getStatusCode() >= 500), 3, 2000);
 
         finalResponse.then().statusCode(200);
     }

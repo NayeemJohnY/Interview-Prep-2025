@@ -1,5 +1,7 @@
 package days.series;
 
+import static org.hamcrest.Matchers.endsWith;
+
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,7 +17,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.restassured.RestAssured;
-import static org.hamcrest.Matchers.*;
 
 public class Day01 {
 

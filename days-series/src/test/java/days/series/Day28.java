@@ -81,7 +81,8 @@ public class Day28 {
         List<String> list = List.of("alice", "bob", "adam", "bruce", "carol");
         System.out.println(list.stream().collect(Collectors.groupingBy(str -> str.charAt(0))));
         System.out.println(list.stream().collect(Collectors.groupingBy(
-                str -> Character.toUpperCase(str.charAt(0)), (Supplier<TreeMap<Character, List<String>>>)TreeMap::new, Collectors.toList())));
+                str -> Character.toUpperCase(str.charAt(0)), (Supplier<TreeMap<Character, List<String>>>) TreeMap::new,
+                Collectors.toList())));
     }
 
     /*
@@ -165,7 +166,7 @@ public class Day28 {
      * automation?
      */
     @Test
-    public void validateAPIResponseTimeSLA(){
+    public void validateAPIResponseTimeSLA() {
         RestAssured.given().get("https://dummyjson.com/posts?limit=100").then().time(lessThan(5000L));
     }
 }

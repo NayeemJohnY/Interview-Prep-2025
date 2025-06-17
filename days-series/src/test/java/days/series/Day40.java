@@ -200,7 +200,9 @@ public class Day40 {
      * sequence.
      * 
      * Multiple depends @Test(dependsOnMethods = {"testLogin", "testSearch"})
-     *  @Test(dependsOnMethods = {"testLogin", "testSearch"}, dependsOnGroups = "cart")
+     * 
+     * @Test(dependsOnMethods = {"testLogin", "testSearch"}, dependsOnGroups =
+     * "cart")
      */
     @Test(groups = "login")
     public void testLogin() {
@@ -222,7 +224,7 @@ public class Day40 {
         System.out.println("Running testPayment: Payment functionality");
     }
 
-    @Test(dependsOnMethods = {"testLogin", "testSearch"}, dependsOnGroups = "checkout")
+    @Test(dependsOnMethods = { "testLogin", "testSearch" }, dependsOnGroups = "checkout")
     public void testFinalizeOrder() {
         System.out.println("Running testFinalizeOrder: Finalize Order functionality");
         // This test depends on both login/search methods and the entire checkout group

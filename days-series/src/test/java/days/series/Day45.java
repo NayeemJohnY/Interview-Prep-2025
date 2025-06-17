@@ -175,7 +175,7 @@ public class Day45 {
      * | Numeric input | Enter letters |
      * | File upload | Try uploading a large/invalid file |
      * | Date field | Enter past or invalid date |
-     * | Combo box | Leave unselected | 
+     * | Combo box | Leave unselected |
      * 
      * 📋 Tips for Effective Error Guessing:
      * 🔁 Review past defect logs
